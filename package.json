@@ -1,0 +1,30 @@
+{
+  "name": "to-do-app",
+  "version": "1.0.0",
+  "description": "to-do app",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "cd server && npm start",
+    "start:dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "heroku-postbuild": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tchestnut85/to-do-app.git"
+  },
+  "author": "Tom Chestnut",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tchestnut85/to-do-app/issues"
+  },
+  "homepage": "https://github.com/tchestnut85/to-do-app#readme",
+  "devDependencies": {
+    "concurrently": "^5.3.0"
+  },
+  "dependencies": {
+    "if-env": "^1.0.4"
+  }
+}
