@@ -18,7 +18,13 @@ const todoSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: format(Date.now, 'MMM do yyyy')
+            default: Date.now,
+            get: createdAtDate => format(createdAtDate, 'MMM do yyyy')
+        }
+    },
+    {
+        toJSON: {
+            getters: true
         }
     }
 );

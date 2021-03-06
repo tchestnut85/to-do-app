@@ -64,7 +64,7 @@ const CreateTodo = () => {
                                 className="form-check-input"
                                 id='priority-medium'
                                 name='priority'
-                                value='ledium'
+                                value='medium'
                                 checked={setTodoState.priority === 'medium'}
                                 onChange={handleChange}
                             />
