@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Redirect } from 'react-router-dom';
+
 const CreateTodo = () => {
     const [todoState, setTodoState] = useState({
         title: '',
@@ -8,6 +10,7 @@ const CreateTodo = () => {
         completed: false
     });
 
+    // Function to update the todo state from the form input
     const handleChange = event => {
         const { name, value } = event.target;
 
@@ -16,12 +19,36 @@ const CreateTodo = () => {
             [name]: value
         });
     };
-    console.log(todoState);
 
+    // TODO - Update the saveTodo and handleSubmit functions to use 'useMutation' hook from React-Query package
+    // docs reference: https://react-query.tanstack.com/guides/invalidations-from-mutations
+    // example: https://blog.bitsrc.io/how-to-start-using-react-query-4869e3d5680d
+
+    // POST request to save the todo
+    const saveTodo = () => {
+        return fetch('/api/todos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(todoState)
+        });
+    };
+
+    // Submit the form data and call the saveTodo function, then reset the todo state
     const handleSubmit = async (event, todoState) => {
         event.preventDefault();
 
+        try {
+            const response = await saveTodo(todoState);
 
+            if (!response.ok) {
+                throw new Error('There was an error.');
+            }
+            console.log(response);
+        } catch (err) {
+            console.error(err);
+        }
 
         setTodoState({
             title: '',
@@ -29,16 +56,8 @@ const CreateTodo = () => {
             priority: '',
             completed: false
         });
-    };
 
-    const saveTodo = (todoState) => {
-        return fetch('/api/todos', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify()
-        });
+        location.replace('/');
     };
 
     return (

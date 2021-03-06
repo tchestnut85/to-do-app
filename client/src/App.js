@@ -16,8 +16,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <Nav />
         <div className="container">
+          <Nav />
           <Route exact path='/' component={TodoList} />
           <Route exact path='/edit/:id' component={EditTodo} />
           <Route exact path='/create' component={CreateTodo} />

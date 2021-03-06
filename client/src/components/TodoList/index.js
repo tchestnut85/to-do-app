@@ -13,7 +13,7 @@ const TodoList = () => {
         'todoData', () =>
         fetch('/api/todos/').then(res => res.json())
     );
-    console.log(data);
+    // console.log(data);
 
     if (isLoading) {
         return <h2>Loading To-Do List...</h2>;
