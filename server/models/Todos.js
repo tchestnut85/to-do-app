@@ -3,6 +3,11 @@ const { format } = require('date-fns');
 
 const todoSchema = new Schema(
     {
+        title: {
+            type: String,
+            required: true,
+            trim: true
+        },
         description: {
             type: String,
             required: true,

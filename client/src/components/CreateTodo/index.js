@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const CreateTodo = () => {
     const [todoState, setTodoState] = useState({
+        title: '',
         description: '',
         priority: '',
         completed: false
@@ -17,22 +18,46 @@ const CreateTodo = () => {
     };
     console.log(todoState);
 
-    const handleSubmit = event => {
+    const handleSubmit = async (event, todoState) => {
         event.preventDefault();
 
+
+
         setTodoState({
+            title: '',
             description: '',
             priority: '',
             completed: false
         });
     };
 
+    const saveTodo = (todoState) => {
+        return fetch('/api/todos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        });
+    };
 
     return (
         <main>
             <h2>Create New To-Do Item</h2>
             <section>
                 <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="title">Title:</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id='title'
+                            name='title'
+                            value={todoState.title}
+                            onChange={handleChange}
+                        />
+                    </div>
+
                     <div className="form-group">
                         <label htmlFor="description">Description:</label>
                         <input
