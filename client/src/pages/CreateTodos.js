@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
+import Auth from '../utils/auth';
 import { Redirect } from 'react-router-dom';
+import { saveTodo } from '../utils/API';
 
 const CreateTodo = () => {
     const [todoState, setTodoState] = useState({
@@ -24,23 +26,19 @@ const CreateTodo = () => {
     // docs reference: https://react-query.tanstack.com/guides/invalidations-from-mutations
     // example: https://blog.bitsrc.io/how-to-start-using-react-query-4869e3d5680d
 
-    // POST request to save the todo
-    const saveTodo = () => {
-        return fetch('/api/todos', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(todoState)
-        });
-    };
-
     // Submit the form data and call the saveTodo function, then reset the todo state
     const handleSubmit = async (event, todoState) => {
         event.preventDefault();
 
+        // Get the logged in user's token
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+
         try {
-            const response = await saveTodo(todoState);
+            const response = await saveTodo(todoState, token);
 
             if (!response.ok) {
                 throw new Error('There was an error.');

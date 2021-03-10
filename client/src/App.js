@@ -1,14 +1,14 @@
 import './index.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Link, Route, BrowserRouter as Router } from 'react-router-dom';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 
-import CreateTodo from './components/CreateTodo';
-import EditTodo from './components/EditTodo';
+import CreateTodo from './pages/CreateTodos';
+import EditTodo from './pages/EditTodos';
 import Nav from './components/Nav';
 import React from 'react';
-import TodoList from './components/TodoList';
+import TodoList from './pages/TodoList';
 
 const queryClient = new QueryClient();
 
