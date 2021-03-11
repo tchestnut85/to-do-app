@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 import Login from '../components/Login';
-import Signup from '../components/Signup';
 import { capitalizeStr } from '../utils/helpers';
 import { useQuery } from 'react-query';
 
@@ -66,11 +65,14 @@ const TodoList = () => {
                     </Center>
 
                     <section>
-                        <Signup />
+                        <p>
+                            Haven't joined yet?
+                        </p>
+                        <Link to='/join'>Click here!</Link>
                     </section>
                 </>
             }
-        </main>
+        </main >
     );
 };
 

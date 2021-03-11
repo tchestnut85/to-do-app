@@ -21,6 +21,10 @@ const todoSchema = new Schema(
             type: Boolean,
             required: true
         },
+        username: {
+            type: String,
+            required: true
+        },
         createdAt: {
             type: Date,
             default: Date.now,

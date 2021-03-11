@@ -50,7 +50,7 @@ function Login() {
                 isRequired
             >
                 <FormLabel htmlFor='name'>Your Name:</FormLabel>
-                <Input size='lg' type='text' id='name' />
+                <Input size='lg' name='name' type='text' id='name' onChange={handleChange} />
                 <FormHelperText>First Name, Nickname, whatever you prefer!</FormHelperText>
             </FormControl>
 
@@ -59,8 +59,8 @@ function Login() {
             </Center>
 
             <FormControl isRequired>
-                <FormLabel htmlFor='password'>Password:</FormLabel>
-                <Input size='lg' type='password' id='password' />
+                <FormLabel htmlFor='loginPassword'>Password:</FormLabel>
+                <Input size='lg' name='password' type='password' id='loginPassword' onChange={handleChange} />
                 <FormHelperText>Shhh... Don't share!</FormHelperText>
                 <FormErrorMessage></FormErrorMessage>
             </FormControl>

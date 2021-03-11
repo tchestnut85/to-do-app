@@ -10,8 +10,8 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from 'react';
 
-import Auth from '../../utils/auth';
-import { createUser } from '../../utils/API';
+import Auth from '../utils/auth';
+import { createUser } from '../utils/API';
 
 function Signup() {
 
@@ -60,15 +60,15 @@ function Signup() {
                 onSubmit={handleSubmit}
             >
                 <FormLabel htmlFor='name'>Your Name:</FormLabel>
-                <Input size='lg' type='text' id='name' />
+                <Input size='lg' type='text' id='name' name='name' onChange={handleChange} />
                 <FormHelperText>First Name, Nickname, whatever you prefer!</FormHelperText>
 
                 <Center height='50px'>
                     <Divider orientation="horizontal" />
                 </Center>
 
-                <FormLabel htmlFor='password'>Password:</FormLabel>
-                <Input size='lg' type='password' id='password' />
+                <FormLabel htmlFor='signupPassword'>Password:</FormLabel>
+                <Input size='lg' type='password' id='signupPassword' name='password' onChange={handleChange} />
                 <FormHelperText>Shhh... Don't share!</FormHelperText>
                 <FormErrorMessage></FormErrorMessage>
             </FormControl>
