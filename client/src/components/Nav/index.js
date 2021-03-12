@@ -1,8 +1,16 @@
-import { Heading } from "@chakra-ui/react";
+import { Button, Heading } from "@chakra-ui/react";
+
+import Auth from '../../utils/auth';
 import { Link } from 'react-router-dom';
 import React from 'react';
 
 function Nav() {
+
+    const logout = event => {
+        event.preventDefault();
+        Auth.logout();
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className='navbar-brand'><i className="fa-2x fas fa-clipboard-check"></i></div>
@@ -14,12 +22,28 @@ function Nav() {
             </button>
             <div id='navbarToggle' className="collapse navbar-collapse">
                 <ul className="navbar-nav mr-auto">
-                    <li className='navbar-item'>
-                        <Link to='/' className='nav-link'>All Items</Link>
-                    </li>
-                    <li className="navbar-item">
-                        <Link to='/create' className='nav-link'>Create Item</Link>
-                    </li>
+                    {Auth.loggedIn() ? (
+                        <>
+                            <li className='navbar-item'>
+                                <Link to='/' className='nav-link'>All Items</Link>
+                            </li>
+                            <li className="navbar-item">
+                                <Link to='/create' className='nav-link'>Create Item</Link>
+                            </li>
+                            <li className="navbar-item">
+                                <Button
+                                    onClick={logout}
+                                    className='nav-link'
+                                >
+                                    Logout
+                        </Button>
+                            </li>
+                        </>
+                    ) : (
+                        <li>
+                            <Link to='/join' className='nav-link'>Join!</Link>
+                        </li>
+                    )}
                 </ul>
             </div>
         </nav>

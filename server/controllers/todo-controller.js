@@ -1,6 +1,8 @@
 const { Todo } = require('../models');
 
-const todoController = {
+// TODO - refactor code to use async/await
+
+module.exports = {
     // GET all Todos
     getTodos(req, res) {
         Todo.find({})
@@ -25,7 +27,9 @@ const todoController = {
                 res.json({ message: 'Your ToDo was added to the list!', todoData });
             })
             .catch(err => res.status(400).json(err));
-    }
-};
+    },
 
-module.exports = todoController;
+    // PUT - edit/update/mark complete a todo
+
+    // DELETE - delete a todo
+};

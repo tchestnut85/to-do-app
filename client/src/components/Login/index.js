@@ -1,4 +1,5 @@
 import {
+    Button,
     Center,
     Divider,
     FormControl,
@@ -11,6 +12,7 @@ import {
 import React, { useState } from 'react';
 
 import Auth from '../../utils/auth';
+import { loginUser } from '../../utils/API';
 
 function Login() {
 
@@ -25,6 +27,7 @@ function Login() {
             [name]: value
         });
     };
+    console.log(formState);
 
     const handleSubmit = async (event, formState) => {
         event.preventDefault();
@@ -45,25 +48,25 @@ function Login() {
     return (
         <section>
             <Heading as='h3' my='25px'>Login here!</Heading>
-            <FormControl
-                onSubmit={handleSubmit}
-                isRequired
-            >
-                <FormLabel htmlFor='name'>Your Name:</FormLabel>
-                <Input size='lg' name='name' type='text' id='name' onChange={handleChange} />
-                <FormHelperText>First Name, Nickname, whatever you prefer!</FormHelperText>
-            </FormControl>
+            <form onSubmit={handleSubmit}>
+                <FormControl isRequired>
+                    <FormLabel htmlFor='name'>Your Name:</FormLabel>
+                    <Input size='lg' name='name' type='text' id='name' onChange={handleChange} />
+                    <FormHelperText>First Name, Nickname, whatever you prefer!</FormHelperText>
 
-            <Center height='50px'>
-                <Divider orientation="horizontal" />
-            </Center>
+                    <Center height='50px'>
+                        <Divider orientation="horizontal" />
+                    </Center>
 
-            <FormControl isRequired>
-                <FormLabel htmlFor='loginPassword'>Password:</FormLabel>
-                <Input size='lg' name='password' type='password' id='loginPassword' onChange={handleChange} />
-                <FormHelperText>Shhh... Don't share!</FormHelperText>
-                <FormErrorMessage></FormErrorMessage>
-            </FormControl>
+                    <FormLabel htmlFor='loginPassword'>Password:</FormLabel>
+                    <Input size='lg' name='password' type='password' id='loginPassword' onChange={handleChange} />
+                    <FormHelperText>Shhh... Don't share!</FormHelperText>
+                    <FormErrorMessage></FormErrorMessage>
+                    <Button type='submit' colorScheme="teal" size="lg">
+                        Login
+                </Button>
+                </FormControl>
+            </form>
         </section>
     );
 }
