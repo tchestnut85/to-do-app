@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 import CreateTodo from './pages/CreateTodos';
 import EditTodo from './pages/EditTodos';
+import Login from './components/Login';
 import Nav from './components/Nav';
 import React from 'react';
 import Signup from './pages/Signup';
@@ -19,8 +20,9 @@ function App() {
       <Router>
         <div className="container">
           <Nav />
-          <Route exact path='/' component={TodoList} />
-          <Route exact path='/join' component={Signup} />
+          <Route exact path='/' component={Signup} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/todos' component={TodoList} />
           <Route exact path='/edit/:id' component={EditTodo} />
           <Route exact path='/create' component={CreateTodo} />
         </div>

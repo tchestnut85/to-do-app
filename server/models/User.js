@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const { format } = require('date-fns');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
@@ -6,7 +7,8 @@ const userSchema = new Schema(
         name: {
             type: String,
             required: true,
-            trim: true
+            trim: true,
+            unique: true
         },
         password: {
             type: String,
@@ -18,11 +20,18 @@ const userSchema = new Schema(
                 type: Schema.Types.ObjectId,
                 ref: 'Todo'
             }
-        ]
+        ],
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: createdAtDate => format(createdAtDate, 'MMM do yyyy')
+        },
+        id: false
     },
     {
         toJSON: {
-            virtuals: true
+            virtuals: true,
+            getters: true
         }
     }
 );
@@ -39,7 +48,7 @@ userSchema.pre('save', async function (next) {
 
 // validate and compare the incoming passwird wuth the hashed one
 userSchema.methods.isCorrectPassword = async function (password) {
-    return brcrypt.compare(password, this.password);
+    return bcrypt.compare(password, this.password);
 };
 
 // When querying a user, get the total number of to-do items they have

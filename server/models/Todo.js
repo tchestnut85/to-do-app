@@ -21,15 +21,16 @@ const todoSchema = new Schema(
             type: Boolean,
             required: true
         },
-        username: {
-            type: String,
-            required: true
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
         },
         createdAt: {
             type: Date,
             default: Date.now,
             get: createdAtDate => format(createdAtDate, 'MMM do yyyy')
-        }
+        },
+        id: false
     },
     {
         toJSON: {

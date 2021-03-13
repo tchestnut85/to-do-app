@@ -25,7 +25,7 @@ function Nav() {
                     {Auth.loggedIn() ? (
                         <>
                             <li className='navbar-item'>
-                                <Link to='/' className='nav-link'>All Items</Link>
+                                <Link to='/todos' className='nav-link'>All Items</Link>
                             </li>
                             <li className="navbar-item">
                                 <Link to='/create' className='nav-link'>Create Item</Link>
@@ -40,9 +40,14 @@ function Nav() {
                             </li>
                         </>
                     ) : (
-                        <li>
-                            <Link to='/join' className='nav-link'>Join!</Link>
-                        </li>
+                        <>
+                            <li>
+                                <Link to='/' className='nav-link'>Join!</Link>
+                            </li>
+                            <li>
+                                <Link to='/login' className='nav-link'>Login!</Link>
+                            </li>
+                        </>
                     )}
                 </ul>
             </div>

@@ -32,9 +32,8 @@ module.exports = {
     // Login a user
     async loginUser({ body }, res) {
         // login the user, sign the token and send it back
-        const user = await User.findOne({
-            name: body.name
-        });
+        console.log(body);
+        const user = await User.findOne({ name: body.name });
 
         if (!user) {
             return res.status(400).json({ message: `We couldn't find this user.` });

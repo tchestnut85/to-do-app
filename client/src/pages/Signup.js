@@ -35,7 +35,7 @@ function Signup() {
         }
 
         setFormState({ name: '', password: '' });
-        location.replace('/');
+        location.replace('/todos');
     };
 
     // Update the form's input state
@@ -47,7 +47,6 @@ function Signup() {
             [name]: value
         });
     };
-    console.log(formState);
 
     return (
         <section>
