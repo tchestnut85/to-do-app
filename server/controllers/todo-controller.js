@@ -20,7 +20,7 @@ module.exports = {
     },
 
     // POST - create a ToDo
-    createTodo({ body }, res) {
+    createTodo({ body, token }, res) {
         Todo.create(body)
             // TODO - add in User functionality
             .then(({ _id }) => {

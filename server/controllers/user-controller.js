@@ -7,7 +7,7 @@ module.exports = {
     async getAllUsers(req, res) {
         const users = await User.find({})
             .populate({ path: 'todos', select: '-__v' })
-            .select('-__v')
+            .select('-__v -password')
             .sort({ createdAt: 'desc' });
 
         if (!users) {
@@ -49,16 +49,13 @@ module.exports = {
         res.json({ token, user });
     },
 
-    // Get a single user by either their ID or name
+    // Get a single user by either their User ID or name
     async getSingleUser({ user = null, params }, res) {
         const foundUser = await User.findOne({
-            $or: [
-                { _id: user ? user._id : params.id },
-                { name: params.name }
-            ]
+            $or: [{ _id: user ? user._id : params.id }, { name: params.name }],
         })
             .populate({ path: 'todos', select: '-__v' })
-            .select('-__v');
+            .select('-__v -password');
 
         if (!foundUser) {
             return res.status(404).json({ message: `Couldn't find this user.` });

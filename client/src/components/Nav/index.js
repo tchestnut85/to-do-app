@@ -42,10 +42,10 @@ function Nav() {
                     ) : (
                         <>
                             <li>
-                                <Link to='/' className='nav-link'>Join!</Link>
+                                <Link to='/signup' className='nav-link'>Join!</Link>
                             </li>
                             <li>
-                                <Link to='/login' className='nav-link'>Login!</Link>
+                                <Link to='/' className='nav-link'>Login!</Link>
                             </li>
                         </>
                     )}

@@ -22,6 +22,8 @@ router.route('/')
 // Route to login a user
 router.route('/login').post(loginUser);
 
+router.route('/me').get(authMiddleware, getSingleUser);
+
 router.route('/:id').get(getSingleUser)
     // Update a user route
     .put(updateUser)

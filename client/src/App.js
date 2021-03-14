@@ -20,8 +20,8 @@ function App() {
       <Router>
         <div className="container">
           <Nav />
-          <Route exact path='/' component={Signup} />
-          <Route exact path='/login' component={Login} />
+          <Route exact path='/' component={Login} />
+          <Route exact path='/signup' component={Signup} />
           <Route exact path='/todos' component={TodoList} />
           <Route exact path='/edit/:id' component={EditTodo} />
           <Route exact path='/create' component={CreateTodo} />

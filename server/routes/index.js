@@ -1,8 +1,12 @@
 const router = require('express').Router();
 const apiRoutes = require('./api/index');
+const path = require('path');
 
 router.use('/api', apiRoutes);
 
-router.use((req, res) => res.status(404).send('<h2>Sorry, there was a 404 error!</h2>'));
+// serve up react front-end in production
+router.use((req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/build/index.html'));
+});
 
 module.exports = router;

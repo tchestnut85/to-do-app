@@ -12,6 +12,7 @@ import {
 import React, { useState } from 'react';
 
 import Auth from '../../utils/auth';
+import { Link } from 'react-router-dom';
 import { loginUser } from '../../utils/API';
 
 function Login() {
@@ -25,7 +26,7 @@ function Login() {
             const response = await loginUser(formState);
 
             if (!response.ok) {
-                throw new Error('There was an error trying to log in.');
+                throw new Error('Incorrect Name or Password.');
             }
             const { user, token } = await response.json();
 
@@ -34,8 +35,8 @@ function Login() {
             console.error(err);
         }
 
-        setFormState({ name: '', password: '' });
         location.replace('/todos');
+        setFormState({ name: '', password: '' });
     };
 
     // Update the form's input state
@@ -47,7 +48,6 @@ function Login() {
             [name]: value
         });
     };
-    console.log('formstate', formState);
 
     return (
         <section>
@@ -68,9 +68,23 @@ function Login() {
                     <FormErrorMessage></FormErrorMessage>
                     <Button type='submit' colorScheme="teal" size="lg">
                         Login
-                </Button>
+                    </Button>
                 </FormControl>
             </form>
+
+            <Center height='50px'>
+                <Divider orientation="horizontal" />
+            </Center>
+
+            <div>
+                <p>
+                    Haven't joined yet?
+                </p>
+                <Button
+                    colorScheme="purple" size="lg">
+                    <Link to='/signup'>Click here!</Link>
+                </Button>
+            </div>
         </section>
     );
 }

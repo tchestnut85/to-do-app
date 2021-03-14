@@ -1,4 +1,4 @@
-// POST route to create a user
+// POST to create a user
 export const createUser = (userData) => {
     return fetch('/api/users', {
         method: 'POST',
@@ -9,9 +9,8 @@ export const createUser = (userData) => {
     });
 };
 
-// POST route to login a user
+// POST to login a user
 export const loginUser = (userData) => {
-    console.log(userData);
     return fetch('/api/users/login', {
         method: 'POST',
         headers: {
@@ -21,7 +20,7 @@ export const loginUser = (userData) => {
     });
 };
 
-// POST Route to create a ToDo item
+// POST to create a ToDo item
 export const saveTodo = (todoState, token) => {
     return fetch('/api/todos', {
         method: 'POST',
@@ -33,13 +32,12 @@ export const saveTodo = (todoState, token) => {
     });
 };
 
-// Get route to get the current user's todo items
+// Request to get the current user's data
 export const getCurrentUser = (token) => {
-    return fetch('/api/users', {
-        method: 'GET',
+    return fetch('/api/users/me', {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
+            authorization: `Bearer ${token}`,
         },
 
     });

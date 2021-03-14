@@ -1,39 +1,42 @@
 const jwt = require('jsonwebtoken');
 
-const secret = 'dovahkiin';
+// const secret = process.env.MYSECRET;
+const secret = 'hailsithis';
 const expiration = '2h';
 
 module.exports = {
-    // Use parameters for signing/creating the jwt. these can change based on what is used to login
     signToken: function ({ name, _id }) {
         const payload = { name, _id };
 
         return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
     },
 
-    authMiddleware: function ({ req }) {
-        // allows token to be sent via req.body, req.query or headers
-        let token = req.body.token || req.query.token || req.headers.authorization;
+    authMiddleware: function (req, res, next) {
+        //allows token to be sent via req.body, req.query or headers
+        let token = req.query.token || req.headers.authorization || req.body.token;
 
-        // Seperate 'Bearer' from 'token'
+        // seperate 'Bearer' from '<tokenvalue>'
         if (req.headers.authorization) {
             token = token.split(' ').pop().trim();
         }
+        console.log(token);
 
-        // If no token, return request object as is
+        // if no token, return request object as is
         if (!token) {
             return req;
         }
 
         try {
-            // deconde and attach user data to request object
+            // decode and attach user data to request object
             const { data } = jwt.verify(token, secret, { maxAge: expiration });
             req.user = data;
         } catch {
             console.log('Invalid token!');
+            return res.status(400).json({ message: 'invalid token!' });
         }
-
-        // return the request object
-        return req;
+        console.log('req', req.user);
+        // return updated request object
+        // return req.user;
+        next();
     }
 };

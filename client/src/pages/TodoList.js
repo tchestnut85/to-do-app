@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import Login from '../components/Login';
 import { capitalizeStr } from '../utils/helpers';
 import { getCurrentUser } from '../utils/API';
-import { useQuery } from 'react-query';
 
 // query for the todo list
 // map through the todo list and display the description and priority and created date
@@ -14,29 +13,20 @@ import { useQuery } from 'react-query';
 const TodoList = () => {
     const [userData, setUserData] = useState({});
     const todos = userData?.todos || {};
-    const todoLength = todos.length;
+    console.log('todos', todos);
 
-    // const { isLoading, error, data } = useQuery(
-    //     'todoData', () =>
-    //     fetch('/api/todos/').then(res => res.json())
-    // );
-
-    // if (isLoading) {
-    //     return <h2>Loading To-Do List...</h2>;
-    // }
-
-    // if (error) {
-    //     console.error('There was an error:', error.message);
-    // }
+    console.log('userdata:', userData);
 
     useEffect(() => {
-        const getUser = async () => {
+        const getUserData = async () => {
             try {
-                const token = Auth.loggedIn ? Auth.getToken() : null;
+                const token = Auth.loggedIn() ? Auth.getToken() : null;
+
                 if (!token) {
                     return false;
                 }
 
+                // const response = await getCurrentUser(token);
                 const response = await getCurrentUser(token);
 
                 if (!response.ok) {
@@ -44,17 +34,16 @@ const TodoList = () => {
                 }
 
                 const user = await response.json();
+
                 setUserData(user);
             } catch (err) {
                 console.error(err);
             }
         };
-        getUser();
-    }, []);
+        getUserData();
+    }, [todos.length]);
 
-    console.log(userData);
-
-    if (!todoLength) {
+    if (!todos.length) {
         return <h2>Loading To-Do List...</h2>;
     };
 
@@ -62,7 +51,7 @@ const TodoList = () => {
         <main>
             {Auth.loggedIn() ?
                 <>
-                    <h2>Current To-Do List</h2>
+                    <h2>Your Current To-Do List</h2>
                     <section>
                         {todos.map(todoItem => (
                             <div
@@ -100,7 +89,7 @@ const TodoList = () => {
                         <p>
                             Haven't joined yet?
                         </p>
-                        <Link to='/'>Click here!</Link>
+                        <Link to='/signup'>Click here!</Link>
                     </section>
                 </>
             }

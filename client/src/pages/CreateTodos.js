@@ -22,10 +22,6 @@ const CreateTodo = () => {
         });
     };
 
-    // TODO - Update the saveTodo and handleSubmit functions to use 'useMutation' hook from React-Query package
-    // docs reference: https://react-query.tanstack.com/guides/invalidations-from-mutations
-    // example: https://blog.bitsrc.io/how-to-start-using-react-query-4869e3d5680d
-
     // Submit the form data and call the saveTodo function, then reset the todo state
     const handleSubmit = async (event, todoState) => {
         event.preventDefault();
@@ -55,7 +51,7 @@ const CreateTodo = () => {
             completed: false
         });
 
-        location.replace('/');
+        // location.replace('/todos');
     };
 
     return (
