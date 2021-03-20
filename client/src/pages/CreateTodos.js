@@ -1,134 +1,148 @@
 import React, { useState } from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 import Auth from '../utils/auth';
-import { Redirect } from 'react-router-dom';
 import { saveTodo } from '../utils/API';
 
 const CreateTodo = () => {
-    const [todoState, setTodoState] = useState({
-        title: '',
-        description: '',
-        priority: '',
-        completed: false
-    });
+	const [todoState, setTodoState] = useState({
+		title: '',
+		description: '',
+		priority: '',
+		completed: false,
+		userId: '',
+	});
 
-    // Function to update the todo state from the form input
-    const handleChange = event => {
-        const { name, value } = event.target;
+	// Grab the current user's ID by decoding the JWT with the getProfile function from Auth
+	const userId = Auth.getProfile().data._id;
 
-        setTodoState({
-            ...todoState,
-            [name]: value
-        });
-    };
+	// Function to update the todo state from the form input
+	const handleChange = event => {
+		const { name, value } = event.target;
 
-    // Submit the form data and call the saveTodo function, then reset the todo state
-    const handleSubmit = async (event, todoState) => {
-        event.preventDefault();
+		setTodoState({
+			...todoState,
+			userId: userId,
+			[name]: value,
+		});
+	};
 
-        // Get the logged in user's token
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
+	// Submit the form data and call the saveTodo function, then reset the todo state
+	// const handleSubmit = async (event, todoState) => {
+	const handleSubmit = async event => {
+		event.preventDefault();
 
-        if (!token) {
-            return false;
-        }
+		// Get the logged in user's token
+		const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-        try {
-            const response = await saveTodo(todoState, token);
+		if (!token) {
+			return false;
+		}
 
-            if (!response.ok) {
-                throw new Error('There was an error.');
-            }
-            console.log(response);
-        } catch (err) {
-            console.error(err);
-        }
+		try {
+			const response = await saveTodo(todoState, token);
 
-        setTodoState({
-            title: '',
-            description: '',
-            priority: '',
-            completed: false
-        });
+			if (!response.ok) {
+				throw new Error('There was an error.');
+			}
 
-        // location.replace('/todos');
-    };
+			location.replace('/todos');
+		} catch (err) {
+			console.error(err);
+		}
 
-    return (
-        <main>
-            <h2>Create New To-Do Item</h2>
-            <section>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="title">Title:</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id='title'
-                            name='title'
-                            value={todoState.title}
-                            onChange={handleChange}
-                        />
-                    </div>
+		setTodoState({
+			title: '',
+			description: '',
+			priority: '',
+			completed: false,
+			userId: userId,
+		});
+	};
 
-                    <div className="form-group">
-                        <label htmlFor="description">Description:</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id='description'
-                            name='description'
-                            value={todoState.description}
-                            onChange={handleChange}
-                        />
-                    </div>
+	return (
+		<main>
+			<h2>Create New To-Do Item</h2>
+			<section>
+				<form onSubmit={handleSubmit}>
+					<div className='form-group'>
+						<label htmlFor='title'>Title:</label>
+						<input
+							type='text'
+							className='form-control'
+							id='title'
+							name='title'
+							value={todoState.title}
+							onChange={handleChange}
+						/>
+					</div>
 
-                    <div className="form-group">
-                        <div className="form-check form-check-inline">
-                            <input
-                                type="radio"
-                                className="form-check-input"
-                                id='priority-low'
-                                name='priority'
-                                value='low'
-                                checked={setTodoState.priority === 'low'}
-                                onChange={handleChange}
-                            />
-                            <label className='form-check-label' htmlFor="priority-low">Low</label>
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input
-                                type="radio"
-                                className="form-check-input"
-                                id='priority-medium'
-                                name='priority'
-                                value='medium'
-                                checked={setTodoState.priority === 'medium'}
-                                onChange={handleChange}
-                            />
-                            <label className='form-check-label' htmlFor="priority-medium">Medium</label>
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input
-                                type="radio"
-                                className="form-check-input"
-                                id='priority-high'
-                                name='priority'
-                                value='high'
-                                checked={setTodoState.priority === 'high'}
-                                onChange={handleChange}
-                            />
-                            <label className='form-check-label' htmlFor="priority-high">High</label>
-                        </div>
-                    </div>
+					<div className='form-group'>
+						<label htmlFor='description'>Description:</label>
+						<input
+							type='text'
+							className='form-control'
+							id='description'
+							name='description'
+							value={todoState.description}
+							onChange={handleChange}
+						/>
+					</div>
 
-                    <div className="form-group">
-                        <button type="submit" className='btn btn-info'>Save To-Do!</button>
-                    </div>
-                </form>
-            </section>
-        </main>
-    );
+					<div className='form-group'>
+						<div className='form-check form-check-inline'>
+							<input
+								type='radio'
+								className='form-check-input'
+								id='priority-low'
+								name='priority'
+								value='low'
+								checked={setTodoState.priority === 'low'}
+								onChange={handleChange}
+							/>
+							<label className='form-check-label' htmlFor='priority-low'>
+								Low
+							</label>
+						</div>
+						<div className='form-check form-check-inline'>
+							<input
+								type='radio'
+								className='form-check-input'
+								id='priority-medium'
+								name='priority'
+								value='medium'
+								checked={setTodoState.priority === 'medium'}
+								onChange={handleChange}
+							/>
+							<label className='form-check-label' htmlFor='priority-medium'>
+								Medium
+							</label>
+						</div>
+						<div className='form-check form-check-inline'>
+							<input
+								type='radio'
+								className='form-check-input'
+								id='priority-high'
+								name='priority'
+								value='high'
+								checked={setTodoState.priority === 'high'}
+								onChange={handleChange}
+							/>
+							<label className='form-check-label' htmlFor='priority-high'>
+								High
+							</label>
+						</div>
+					</div>
+
+					<div className='form-group'>
+						<button type='submit' className='btn btn-info'>
+							Save To-Do!
+						</button>
+					</div>
+				</form>
+			</section>
+		</main>
+	);
 };
 
 export default CreateTodo;
