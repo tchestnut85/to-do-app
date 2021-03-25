@@ -19,7 +19,7 @@ const CreateTodo = () => {
 	// Function to update the todo state from the form input
 	const handleChange = event => {
 		const { name, value } = event.target;
-
+		console.log(name, value);
 		setTodoState({
 			...todoState,
 			userId: userId,

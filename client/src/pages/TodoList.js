@@ -58,7 +58,7 @@ const TodoList = () => {
 										Priority Level: {capitalizeStr(todoItem.priority)}
 									</p>
 									<div>
-										<Link to='/edit/:id' className='btn btn-info'>
+										<Link to={`/edit/${todoItem._id}`} className='btn btn-info'>
 											Edit
 										</Link>
 										<button className='btn btn-danger'>Delete</button>
