@@ -20,9 +20,18 @@ export const loginUser = userData => {
 	});
 };
 
+// Request to get the current user's data
+export const getCurrentUser = token => {
+	return fetch('/api/users/me', {
+		headers: {
+			'Content-Type': 'application/json',
+			authorization: `Bearer ${token}`,
+		},
+	});
+};
+
 // POST to create a ToDo item
 export const saveTodo = (todoState, token) => {
-	console.log(todoState, token);
 	return fetch('/api/todos', {
 		method: 'POST',
 		headers: {
@@ -33,12 +42,26 @@ export const saveTodo = (todoState, token) => {
 	});
 };
 
-// Request to get the current user's data
-export const getCurrentUser = token => {
-	return fetch('/api/users/me', {
+export const getTodoItem = (todoID, token) => {
+	console.log(todoID, token);
+	return fetch(`/api/todos/${todoID}`, {
+		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${token}`,
 		},
+	});
+};
+
+// Update/edit a todo item
+export const editTodo = (todoState, todoID, token) => {
+	console.log(todoState, todoID, token);
+	return fetch(`/api/todos/:${todoID}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify(todoState),
 	});
 };

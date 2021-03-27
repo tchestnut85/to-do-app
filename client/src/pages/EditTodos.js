@@ -8,27 +8,59 @@ import {
 	Input,
 	Radio,
 	RadioGroup,
-	Stack,
+	Switch,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { editTodo, getTodoItem } from '../utils/API';
 
+import Auth from '../utils/auth';
+import DividerLine from '../components/DividerLine';
 import { useParams } from 'react-router-dom';
 
-const EditTodo = () => {
-	// Todo - query for the to-do item to edit using the useParams hook and use that data to populate the values of the form input elements
+function EditTodo() {
+	// Get the Todo ID from the parameters
+	const { id: todoID } = useParams();
+
+	// Get the user's data to query for the current Todo item data using the todoID
+	const [userData, setUserData] = useState({});
+	const currentTodo = userData?.todos || {};
+	console.log(currentTodo);
+
+	// Keep track of the completed property from the ChakraUI switch
+	const [isCompleted, setIsCompleted] = useState('');
+
+	// Keep track on the priorityLevel so ChakraUI's FormState works with to todoState below
+	const [priorityLevel, setPriorityLevel] = useState('');
 
 	const [todoState, setTodoState] = useState({
 		title: '',
 		description: '',
-		priority: '',
+		priority: priorityLevel,
 		completed: false,
 		userId: '',
 	});
-
-	const [priorityLevel, setPriorityLevel] = useState('');
+	console.log(todoState);
 
 	// ToDo - need to setup the handlesubmit function
-	const handleSubmit = {};
+	const handleSubmit = async event => {
+		event.preventDefault();
+
+		const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+		if (!token) {
+			return false;
+		}
+
+		try {
+			const response = await editTodo(todoState, todoID, token);
+			if (!response) {
+				throw new Error('There was an error.');
+			}
+			// location.assign('/todos');
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
 	const handleChange = event => {
 		const { name, value } = event.target;
@@ -39,16 +71,29 @@ const EditTodo = () => {
 			[name]: value,
 		});
 	};
-	console.log(todoState);
+
+	useEffect(() => {
+		const getTodo = async () => {
+			try {
+				const token = Auth.loggedIn() ? Auth.getToken() : null;
+				if (!token) {
+					return false;
+				}
+				const response = await getTodoItem(todoID, token);
+				setUserData(response);
+			} catch (err) {
+				console.error(err);
+			}
+		};
+		getTodo();
+	}, []);
 
 	return (
 		<main>
 			<h2>Edit This To-Do List Item</h2>
 			<section>
-				<form
-				// onSubmit={handleSubmit}
-				>
-					<FormControl action=''>
+				<form onSubmit={handleSubmit}>
+					<FormControl>
 						<FormLabel htmlFor='title'>Title:</FormLabel>
 						<Input
 							type='text'
@@ -59,9 +104,7 @@ const EditTodo = () => {
 							onChange={handleChange}
 						/>
 
-						<Center height='50px'>
-							<Divider orientation='horizontal' />
-						</Center>
+						<DividerLine />
 
 						<FormLabel htmlFor='description'>Description:</FormLabel>
 						<Input
@@ -73,9 +116,7 @@ const EditTodo = () => {
 							onChange={handleChange}
 						/>
 
-						<Center height='50px'>
-							<Divider orientation='horizontal' />
-						</Center>
+						<DividerLine />
 
 						<FormLabel htmlFor='priority'>Priority:</FormLabel>
 						<RadioGroup
@@ -83,6 +124,7 @@ const EditTodo = () => {
 							name='priority'
 							defaultValue={todoState.priority}
 							onChange={setPriorityLevel}
+							onClick={handleChange}
 							direction='row'
 						>
 							<Radio name='priority' padding={4} value='low' colorScheme='cyan'>
@@ -96,15 +138,33 @@ const EditTodo = () => {
 							</Radio>
 						</RadioGroup>
 
-						<FormErrorMessage></FormErrorMessage>
+						<DividerLine />
+
+						<div>
+							<p>Mark this item complete?</p>
+							<Switch
+								id='complete'
+								colorScheme='purple'
+								size='lg'
+								defaultChecked={todoState.completed}
+								onClick={setIsCompleted}
+								// onClick={setTodoState}
+								isChecked={isCompleted}
+								value={todoState.completed}
+							/>
+						</div>
+
+						<DividerLine />
+
 						<Button type='submit' colorScheme='teal' size='lg'>
 							Update!
 						</Button>
+						<FormErrorMessage></FormErrorMessage>
 					</FormControl>
 				</form>
 			</section>
 		</main>
 	);
-};
+}
 
 export default EditTodo;

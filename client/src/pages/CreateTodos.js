@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
 import Auth from '../utils/auth';
+import TodoList from './TodoList';
 import { saveTodo } from '../utils/API';
 
-const CreateTodo = () => {
+function CreateTodo() {
 	const [todoState, setTodoState] = useState({
 		title: '',
 		description: '',
@@ -28,7 +29,6 @@ const CreateTodo = () => {
 	};
 
 	// Submit the form data and call the saveTodo function, then reset the todo state
-	// const handleSubmit = async (event, todoState) => {
 	const handleSubmit = async event => {
 		event.preventDefault();
 
@@ -46,7 +46,7 @@ const CreateTodo = () => {
 				throw new Error('There was an error.');
 			}
 
-			location.replace('/todos');
+			location.assign('/todos');
 		} catch (err) {
 			console.error(err);
 		}
@@ -143,6 +143,6 @@ const CreateTodo = () => {
 			</section>
 		</main>
 	);
-};
+}
 
 export default CreateTodo;
