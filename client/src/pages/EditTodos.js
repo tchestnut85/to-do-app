@@ -20,11 +20,7 @@ import { useParams } from 'react-router-dom';
 function EditTodo() {
 	// Get the Todo ID from the parameters
 	const { id: todoID } = useParams();
-
-	// Get the user's data to query for the current Todo item data using the todoID
-	const [userData, setUserData] = useState({});
-	const currentTodo = userData?.todos || {};
-	console.log(currentTodo);
+	console.log({ todoID });
 
 	// Keep track of the completed property from the ChakraUI switch
 	const [isCompleted, setIsCompleted] = useState('');
@@ -79,8 +75,10 @@ function EditTodo() {
 				if (!token) {
 					return false;
 				}
-				const response = await getTodoItem(todoID, token);
-				setUserData(response);
+				const response = await getTodoItem(todoID);
+				const todoData = await response.json();
+				console.log(todoData);
+				setTodoState(todoData);
 			} catch (err) {
 				console.error(err);
 			}

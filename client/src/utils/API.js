@@ -42,13 +42,13 @@ export const saveTodo = (todoState, token) => {
 	});
 };
 
-export const getTodoItem = (todoID, token) => {
-	console.log(todoID, token);
+export const getTodoItem = todoID => {
+	console.log({ todoID });
 	return fetch(`/api/todos/${todoID}`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
+			// Authorization: `Bearer ${token}`,
 		},
 	});
 };
