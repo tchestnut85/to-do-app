@@ -56,7 +56,7 @@ export const getTodoItem = todoID => {
 // Update/edit a todo item
 export const editTodo = (todoState, todoID, token) => {
 	console.log(todoState, todoID, token);
-	return fetch(`/api/todos/:${todoID}`, {
+	return fetch(`/api/todos/${todoID}`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',

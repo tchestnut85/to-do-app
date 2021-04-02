@@ -12,6 +12,7 @@ import {
 import React, { useState } from 'react';
 
 import Auth from '../../utils/auth';
+import DividerLine from '../DividerLine';
 import { Link } from 'react-router-dom';
 import { loginUser } from '../../utils/API';
 
@@ -59,9 +60,7 @@ function Login() {
 					<Input size='lg' name='name' type='text' id='name' value={formState.name} onChange={handleChange} />
 					<FormHelperText>First Name, Nickname, whatever you prefer!</FormHelperText>
 
-					<Center height='50px'>
-						<Divider orientation='horizontal' />
-					</Center>
+					<DividerLine />
 
 					<FormLabel htmlFor='loginPassword'>Password:</FormLabel>
 					<Input
@@ -72,23 +71,22 @@ function Login() {
 						value={formState.password}
 						onChange={handleChange}
 					/>
-					<FormHelperText>Shhh... Don't share!</FormHelperText>
 					<FormErrorMessage></FormErrorMessage>
-					<Button type='submit' colorScheme='teal' size='lg'>
+					<Button marginTop={5} type='submit' colorScheme='teal' size='lg'>
 						Login
 					</Button>
 				</FormControl>
 			</form>
 
-			<Center height='50px'>
-				<Divider orientation='horizontal' />
-			</Center>
+			<DividerLine />
 
 			<div>
 				<p>Haven't joined yet?</p>
-				<Button colorScheme='purple' size='lg'>
-					<Link to='/signup'>Click here!</Link>
-				</Button>
+				<Link to='/signup'>
+					<Button marginTop={5} colorScheme='purple' size='lg'>
+						Click here!
+					</Button>
+				</Link>
 			</div>
 		</section>
 	);

@@ -20,7 +20,6 @@ function CreateTodo() {
 	// Function to update the todo state from the form input
 	const handleChange = event => {
 		const { name, value } = event.target;
-		console.log(name, value);
 		setTodoState({
 			...todoState,
 			userId: userId,
@@ -97,7 +96,7 @@ function CreateTodo() {
 								id='priority-low'
 								name='priority'
 								value='low'
-								checked={setTodoState.priority === 'low'}
+								// checked={setTodoState.priority === 'low'}
 								onChange={handleChange}
 							/>
 							<label className='form-check-label' htmlFor='priority-low'>
@@ -111,7 +110,7 @@ function CreateTodo() {
 								id='priority-medium'
 								name='priority'
 								value='medium'
-								checked={setTodoState.priority === 'medium'}
+								// checked={setTodoState.priority === 'medium'}
 								onChange={handleChange}
 							/>
 							<label className='form-check-label' htmlFor='priority-medium'>
@@ -125,7 +124,7 @@ function CreateTodo() {
 								id='priority-high'
 								name='priority'
 								value='high'
-								checked={setTodoState.priority === 'high'}
+								// checked={setTodoState.priority === 'high'}
 								onChange={handleChange}
 							/>
 							<label className='form-check-label' htmlFor='priority-high'>

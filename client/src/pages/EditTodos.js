@@ -1,15 +1,4 @@
-import {
-	Button,
-	Center,
-	Divider,
-	FormControl,
-	FormErrorMessage,
-	FormLabel,
-	Input,
-	Radio,
-	RadioGroup,
-	Switch,
-} from '@chakra-ui/react';
+import { Button, FormControl, FormErrorMessage, FormLabel, Input, Radio, RadioGroup, Switch } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { editTodo, getTodoItem } from '../utils/API';
 
@@ -17,13 +6,12 @@ import Auth from '../utils/auth';
 import DividerLine from '../components/DividerLine';
 import { useParams } from 'react-router-dom';
 
+// ! Errors:
+// todo-1: [] Submitting the update is not working. Need to debug
+
 function EditTodo() {
 	// Get the Todo ID from the parameters
 	const { id: todoID } = useParams();
-	console.log({ todoID });
-
-	// Keep track of the completed property from the ChakraUI switch
-	const [isCompleted, setIsCompleted] = useState('');
 
 	// Keep track on the priorityLevel so ChakraUI's FormState works with to todoState below
 	const [priorityLevel, setPriorityLevel] = useState('');
@@ -31,16 +19,13 @@ function EditTodo() {
 	const [todoState, setTodoState] = useState({
 		title: '',
 		description: '',
-		priority: priorityLevel,
+		// priority: priorityLevel,
 		completed: false,
 		userId: '',
 	});
-	console.log(todoState);
 
-	// ToDo - need to setup the handlesubmit function
 	const handleSubmit = async event => {
 		event.preventDefault();
-
 		const token = Auth.loggedIn() ? Auth.getToken() : null;
 
 		if (!token) {
@@ -52,7 +37,7 @@ function EditTodo() {
 			if (!response) {
 				throw new Error('There was an error.');
 			}
-			// location.assign('/todos');
+			location.assign('/todos');
 		} catch (err) {
 			console.error(err);
 		}
@@ -60,10 +45,8 @@ function EditTodo() {
 
 	const handleChange = event => {
 		const { name, value } = event.target;
-		console.log(name, value);
 		setTodoState({
 			...todoState,
-			priority: priorityLevel,
 			[name]: value,
 		});
 	};
@@ -77,8 +60,13 @@ function EditTodo() {
 				}
 				const response = await getTodoItem(todoID);
 				const todoData = await response.json();
-				console.log(todoData);
-				setTodoState(todoData);
+
+				setTodoState({
+					completed: todoData.completed,
+					priority: todoData.priority,
+					description: todoData.description,
+					title: todoData.title,
+				});
 			} catch (err) {
 				console.error(err);
 			}
@@ -101,9 +89,7 @@ function EditTodo() {
 							value={todoState.title}
 							onChange={handleChange}
 						/>
-
 						<DividerLine />
-
 						<FormLabel htmlFor='description'>Description:</FormLabel>
 						<Input
 							type='text'
@@ -113,16 +99,14 @@ function EditTodo() {
 							value={todoState.description}
 							onChange={handleChange}
 						/>
-
 						<DividerLine />
 
 						<FormLabel htmlFor='priority'>Priority:</FormLabel>
 						<RadioGroup
 							id='priority'
 							name='priority'
-							defaultValue={todoState.priority}
-							onChange={setPriorityLevel}
-							onClick={handleChange}
+							onChange={value => setTodoState({ ...todoState, priority: value })}
+							value={todoState.priority}
 							direction='row'
 						>
 							<Radio name='priority' padding={4} value='low' colorScheme='cyan'>
@@ -135,25 +119,19 @@ function EditTodo() {
 								High
 							</Radio>
 						</RadioGroup>
-
 						<DividerLine />
-
 						<div>
 							<p>Mark this item complete?</p>
 							<Switch
 								id='complete'
+								name='completed'
 								colorScheme='purple'
 								size='lg'
-								defaultChecked={todoState.completed}
-								onClick={setIsCompleted}
-								// onClick={setTodoState}
-								isChecked={isCompleted}
-								value={todoState.completed}
+								isChecked={todoState.completed}
+								onChange={() => setTodoState({ ...todoState, completed: !todoState.completed })}
 							/>
 						</div>
-
 						<DividerLine />
-
 						<Button type='submit' colorScheme='teal' size='lg'>
 							Update!
 						</Button>

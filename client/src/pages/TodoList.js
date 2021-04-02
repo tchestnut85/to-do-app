@@ -1,18 +1,18 @@
-import { Center, Divider } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 
 import Auth from '../utils/auth';
+import { Button } from '@chakra-ui/react';
+import DividerLine from '../components/DividerLine';
 import { Link } from 'react-router-dom';
 import Login from '../components/Login';
 import { capitalizeStr } from '../utils/helpers';
 import { getCurrentUser } from '../utils/API';
 
-// query for the todo list
-// map through the todo list and display the description and priority and created date
-
 const TodoList = () => {
 	const [userData, setUserData] = useState({});
 	const todos = userData?.todos || {};
+	// console.log(userData);
+	// console.log(todos);
 
 	useEffect(() => {
 		const getUserData = async () => {
@@ -30,7 +30,7 @@ const TodoList = () => {
 				}
 
 				const user = await response.json();
-
+				console.log(user);
 				setUserData(user);
 			} catch (err) {
 				console.error(err);
@@ -39,29 +39,43 @@ const TodoList = () => {
 		getUserData();
 	}, [todos.length]);
 
+	if (userData.todoCount === 0) {
+		return (
+			<>
+				<h2>Hi {capitalizeStr(userData.name)}!</h2>
+				<p>You don't have any To-Do items yet... get on it!</p>
+			</>
+		);
+	}
+
 	if (!todos.length) {
-		return <h2>Loading To-Do List...</h2>;
+		return <h2>Loading items...</h2>;
 	}
 
 	return (
 		<main>
 			{Auth.loggedIn() ? (
 				<>
-					<h2>Your Current To-Do List</h2>
+					<h2>{capitalizeStr(userData.name)}'s Current To-Do List</h2>
 					<section>
 						{todos.map(todoItem => (
 							<div key={todoItem._id} id={`todo-${todoItem._id}`} className='card text-center todo-card'>
 								<div className='card-body'>
-									<h3 className='card-title'>{todoItem.title}</h3>
-									<p className='card-text'>{todoItem.description}</p>
-									<p className='card-text text-muted'>
+									<h3 className='card-title item-title'>{todoItem.title}</h3>
+									<p className='card-text item-desc'>{todoItem.description}</p>
+									<p className='card-text text-muted item-level'>
 										Priority Level: {capitalizeStr(todoItem.priority)}
 									</p>
 									<div>
-										<Link to={`/edit/${todoItem._id}`} className='btn btn-info'>
-											Edit
+										<Link to={`/edit/${todoItem._id}`}>
+											<Button margin={3} colorScheme='teal' size='md'>
+												Edit
+											</Button>
 										</Link>
-										<button className='btn btn-danger'>Delete</button>
+
+										<Button margin={3} colorScheme={'red'} size='md'>
+											Delete
+										</Button>
 									</div>
 								</div>
 								<div className='card-footer text-muted'>
@@ -77,9 +91,7 @@ const TodoList = () => {
 						<Login />
 					</section>
 
-					<Center height='100px'>
-						<Divider orientation='horizontal' />
-					</Center>
+					<DividerLine />
 
 					<section>
 						<p>Haven't joined yet?</p>
