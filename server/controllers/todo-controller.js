@@ -21,7 +21,6 @@ module.exports = {
 
 	// GET a single Todo item
 	async getSingleTodo({ params }, res) {
-		console.log({ params });
 		const foundTodo = await Todo.findOne({ _id: params.id });
 
 		if (!foundTodo) {

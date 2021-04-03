@@ -1,12 +1,12 @@
 # React To-Do App
 
-<a href="">![Deployed App](https://img.shields.io/badge/Deployed%20App-blue.svg)</a> <a href=./LICENSE>![License](https://img.shields.io/badge/License%3A-MIT-green.svg)</a>
+<a href="https://todoapp-tc.herokuapp.com/">![Deployed App](https://img.shields.io/badge/Deployed%20App-blue.svg)</a> <a href=./LICENSE>![License](https://img.shields.io/badge/License%3A-MIT-green.svg)</a>
 
 ## Description
 
 This is a To-Do list app to help users stay organized with tasks they need to get done. Users can signup by creating a username and password with authentication using JWTs. The user can create a to-do item, set its priority level, edit an item to update it with changes, mark an item as completed and delete items if they want to.
 
-This is a full-stack MERN app using a RESTful API for interaction with the MongoDB database. React was used on the front-end along with the Chakra UI React library. Bootstrap was also used but will be replaced fully with Chakra UI components.
+This is a Full-Stack MERN app using a RESTful API for interaction with the MongoDB database. React was used on the front-end along with the Chakra UI React library.
 MongoDB is used for the database along with Mongoose, Express and Node.js on the back-end to create a RESTful API that the front-end interacts with.
 
 ## Table of Contents
@@ -21,12 +21,12 @@ MongoDB is used for the database along with Mongoose, Express and Node.js on the
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)  
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)  
-![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
-![Chakra UI](https://img.shields.io/badge/Chakra%20UI-319795?style=for-the-badge)
+![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express)  
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)  
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)  
+![Chakra UI](https://img.shields.io/badge/Chakra%20UI-319795?style=for-the-badge)  
 ![Mongoose.js](https://img.shields.io/badge/Mongoose.js-880000?style=for-the-badge)  
-![MongoDB Atlas](https://img.shields.io/badge/MongoDB%20Atlas-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![MongoDB Atlas](https://img.shields.io/badge/MongoDB%20Atlas-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)  
 ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
 
 ## Screenshots
@@ -50,7 +50,7 @@ Contact me at **thomaschestnut00@gmail.com** with any questions or if you'd like
 
 ## Links
 
--   **[Deployed App]()**
+-   **[Deployed App](https://todoapp-tc.herokuapp.com/)**
 -   **[GitHub Repo](https://github.com/tchestnut85/to-do-app)**
 -   **[My Portfolio](https://tomchestnut.dev)**
 -   **[Connect on LinkedIn](https://www.linkedin.com/in/thomas-chestnut)**
