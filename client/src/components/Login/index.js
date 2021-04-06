@@ -1,14 +1,4 @@
-import {
-	Button,
-	Center,
-	Divider,
-	FormControl,
-	FormErrorMessage,
-	FormHelperText,
-	FormLabel,
-	Heading,
-	Input,
-} from '@chakra-ui/react';
+import { Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
 import Auth from '../../utils/auth';
@@ -16,7 +6,7 @@ import DividerLine from '../DividerLine';
 import { Link } from 'react-router-dom';
 import { loginUser } from '../../utils/API';
 
-function Login() {
+const Login = () => {
 	const [formState, setFormState] = useState({ name: '', password: '' });
 
 	const handleSubmit = async event => {
@@ -90,6 +80,6 @@ function Login() {
 			</div>
 		</section>
 	);
-}
+};
 
 export default Login;

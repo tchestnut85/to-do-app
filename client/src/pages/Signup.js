@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 import Auth from '../utils/auth';
 import { createUser } from '../utils/API';
 
-function Signup() {
+const Signup = () => {
 	const [formState, setFormState] = useState({ name: '', password: '' });
 
 	const handleSubmit = async event => {
@@ -80,6 +80,6 @@ function Signup() {
 			</form>
 		</section>
 	);
-}
+};
 
 export default Signup;

@@ -6,10 +6,7 @@ import Auth from '../utils/auth';
 import DividerLine from '../components/DividerLine';
 import { useParams } from 'react-router-dom';
 
-// ! Errors:
-// todo-1: [] Submitting the update is not working. Need to debug
-
-function EditTodo() {
+const EditTodo = () => {
 	// Get the Todo ID from the parameters
 	const { id: todoID } = useParams();
 
@@ -141,6 +138,6 @@ function EditTodo() {
 			</section>
 		</main>
 	);
-}
+};
 
 export default EditTodo;

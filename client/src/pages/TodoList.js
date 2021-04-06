@@ -11,8 +11,6 @@ import { getCurrentUser } from '../utils/API';
 const TodoList = () => {
 	const [userData, setUserData] = useState({});
 	const todos = userData?.todos || {};
-	// console.log(userData);
-	// console.log(todos);
 
 	useEffect(() => {
 		const getUserData = async () => {
