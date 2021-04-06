@@ -5,7 +5,7 @@ import Auth from '../utils/auth';
 import TodoList from './TodoList';
 import { saveTodo } from '../utils/API';
 
-function CreateTodo() {
+const CreateTodo = () => {
 	const [todoState, setTodoState] = useState({
 		title: '',
 		description: '',
@@ -142,6 +142,6 @@ function CreateTodo() {
 			</section>
 		</main>
 	);
-}
+};
 
 export default CreateTodo;

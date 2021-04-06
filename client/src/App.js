@@ -8,6 +8,7 @@ import CreateTodo from './pages/CreateTodos';
 import EditTodo from './pages/EditTodos';
 import Login from './components/Login';
 import Nav from './components/Nav';
+import NotFound from './pages/NotFound';
 import React from 'react';
 import Signup from './pages/Signup';
 import TodoList from './pages/TodoList';
@@ -26,6 +27,7 @@ function App() {
 						<Route exact path='/todos' component={TodoList} />
 						<Route exact path='/edit/:id' component={EditTodo} />
 						<Route exact path='/create' component={CreateTodo} />
+						<Route component={NotFound} />
 					</Switch>
 				</div>
 			</Router>
