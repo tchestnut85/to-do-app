@@ -1,17 +1,38 @@
 import React, { useEffect, useState } from 'react';
+import { deleteTodo, getCurrentUser } from '../utils/API';
 
 import Auth from '../utils/auth';
 import { Button } from '@chakra-ui/react';
 import DividerLine from '../components/DividerLine';
 import { Link } from 'react-router-dom';
 import Login from '../components/Login';
+import Signup from './Signup';
 import { capitalizeStr } from '../utils/helpers';
-import { getCurrentUser } from '../utils/API';
 
 const TodoList = () => {
 	const [userData, setUserData] = useState({});
 	const todos = userData?.todos || {};
 
+	// Function to delete a todo item
+	const handleDelete = async event => {
+		const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+		if (!token) {
+			return false;
+		}
+
+		try {
+			const response = await deleteTodo(todoID, token);
+
+			if (!response.ok) {
+				throw new Error('There was an error!');
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	// Fetch the loggedin user's data by decoding the JWT from Auth
 	useEffect(() => {
 		const getUserData = async () => {
 			try {
@@ -46,7 +67,7 @@ const TodoList = () => {
 	}
 
 	if (!todos.length) {
-		return <h2>Loading items...</h2>;
+		return Auth.loggedIn() ? <h2>Loading items...</h2> : <Signup />;
 	}
 
 	return (
@@ -56,7 +77,11 @@ const TodoList = () => {
 					<h2>{capitalizeStr(userData.name)}'s Current To-Do List</h2>
 					<section>
 						{todos.map(todoItem => (
-							<div key={todoItem._id} id={`todo-${todoItem._id}`} className='card text-center todo-card'>
+							<div
+								key={todoItem._id}
+								id={`todo-${todoItem._id}`}
+								className='card text-center todo-card'
+							>
 								<div className='card-body'>
 									<h3 className='card-title item-title'>{todoItem.title}</h3>
 									<p className='card-text item-desc'>{todoItem.description}</p>
@@ -70,7 +95,12 @@ const TodoList = () => {
 											</Button>
 										</Link>
 
-										<Button margin={3} colorScheme={'red'} size='md'>
+										<Button
+											onClick={handleDelete}
+											margin={3}
+											colorScheme={'red'}
+											size='md'
+										>
 											Delete
 										</Button>
 									</div>

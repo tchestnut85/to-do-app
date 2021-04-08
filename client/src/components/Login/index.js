@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Auth from '../../utils/auth';
 import DividerLine from '../DividerLine';
 import { Link } from 'react-router-dom';
+import TodoList from '../../pages/TodoList';
 import { loginUser } from '../../utils/API';
 
 const Login = () => {
@@ -40,45 +41,58 @@ const Login = () => {
 	};
 
 	return (
-		<section>
-			<Heading as='h3' my='25px'>
-				Login here!
-			</Heading>
-			<form onSubmit={handleSubmit}>
-				<FormControl isRequired>
-					<FormLabel htmlFor='name'>Your Name:</FormLabel>
-					<Input size='lg' name='name' type='text' id='name' value={formState.name} onChange={handleChange} />
-					<FormHelperText>First Name, Nickname, whatever you prefer!</FormHelperText>
+		<>
+			{Auth.loggedIn() ? (
+				<TodoList />
+			) : (
+				<section>
+					<Heading as='h3' my='25px'>
+						Login here!
+					</Heading>
+					<form onSubmit={handleSubmit}>
+						<FormControl isRequired>
+							<FormLabel htmlFor='name'>Your Name:</FormLabel>
+							<Input
+								size='lg'
+								name='name'
+								type='text'
+								id='name'
+								value={formState.name}
+								onChange={handleChange}
+							/>
+							<FormHelperText>First Name, Nickname, whatever you prefer!</FormHelperText>
+
+							<DividerLine />
+
+							<FormLabel htmlFor='loginPassword'>Password:</FormLabel>
+							<Input
+								size='lg'
+								name='password'
+								type='password'
+								id='loginPassword'
+								value={formState.password}
+								onChange={handleChange}
+							/>
+							<FormErrorMessage></FormErrorMessage>
+							<Button marginTop={5} type='submit' colorScheme='teal' size='lg'>
+								Login
+							</Button>
+						</FormControl>
+					</form>
 
 					<DividerLine />
 
-					<FormLabel htmlFor='loginPassword'>Password:</FormLabel>
-					<Input
-						size='lg'
-						name='password'
-						type='password'
-						id='loginPassword'
-						value={formState.password}
-						onChange={handleChange}
-					/>
-					<FormErrorMessage></FormErrorMessage>
-					<Button marginTop={5} type='submit' colorScheme='teal' size='lg'>
-						Login
-					</Button>
-				</FormControl>
-			</form>
-
-			<DividerLine />
-
-			<div>
-				<p>Haven't joined yet?</p>
-				<Link to='/signup'>
-					<Button marginTop={5} colorScheme='purple' size='lg'>
-						Click here!
-					</Button>
-				</Link>
-			</div>
-		</section>
+					<div>
+						<p>Haven't joined yet?</p>
+						<Link to='/signup'>
+							<Button marginTop={5} colorScheme='purple' size='lg'>
+								Click here!
+							</Button>
+						</Link>
+					</div>
+				</section>
+			)}
+		</>
 	);
 };
 

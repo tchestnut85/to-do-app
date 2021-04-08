@@ -12,6 +12,8 @@ import {
 import React, { useState } from 'react';
 
 import Auth from '../utils/auth';
+import DividerLine from '../components/DividerLine';
+import { Link } from 'react-router-dom';
 import { createUser } from '../utils/API';
 
 const Signup = () => {
@@ -58,9 +60,7 @@ const Signup = () => {
 					<Input size='lg' type='text' id='name' name='name' value={formState.name} onChange={handleChange} />
 					<FormHelperText>First Name, Nickname, whatever you prefer!</FormHelperText>
 
-					<Center height='50px'>
-						<Divider orientation='horizontal' />
-					</Center>
+					<DividerLine />
 
 					<FormLabel htmlFor='signupPassword'>Password:</FormLabel>
 					<Input
@@ -76,6 +76,14 @@ const Signup = () => {
 					<Button marginTop={5} type='submit' colorScheme='teal' size='lg'>
 						Join
 					</Button>
+
+					<DividerLine />
+					<p>Have an account already?</p>
+					<Link to='/'>
+						<Button marginTop={5} colorScheme='purple' size='lg'>
+							Login!
+						</Button>
+					</Link>
 				</FormControl>
 			</form>
 		</section>

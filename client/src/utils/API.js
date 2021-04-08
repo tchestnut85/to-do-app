@@ -63,3 +63,14 @@ export const editTodo = (todoState, todoID, token) => {
 		body: JSON.stringify(todoState),
 	});
 };
+
+// Delete a todo item
+export const deleteTodo = (todoID, token) => {
+	return fetch(`/api/todos/${todoID}`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+	});
+};
