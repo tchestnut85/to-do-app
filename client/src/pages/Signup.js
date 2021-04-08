@@ -1,7 +1,5 @@
 import {
 	Button,
-	Center,
-	Divider,
 	FormControl,
 	FormErrorMessage,
 	FormHelperText,
@@ -57,7 +55,14 @@ const Signup = () => {
 			<form onSubmit={handleSubmit}>
 				<FormControl isRequired>
 					<FormLabel htmlFor='name'>Your Name:</FormLabel>
-					<Input size='lg' type='text' id='name' name='name' value={formState.name} onChange={handleChange} />
+					<Input
+						size='lg'
+						type='text'
+						id='name'
+						name='name'
+						value={formState.name}
+						onChange={handleChange}
+					/>
 					<FormHelperText>First Name, Nickname, whatever you prefer!</FormHelperText>
 
 					<DividerLine />

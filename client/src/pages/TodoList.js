@@ -14,19 +14,21 @@ const TodoList = () => {
 	const todos = userData?.todos || {};
 
 	// Function to delete a todo item
-	const handleDelete = async event => {
+	const handleDelete = async todoID => {
 		const token = Auth.loggedIn() ? Auth.getToken() : null;
-
 		if (!token) {
 			return false;
 		}
 
 		try {
-			const response = await deleteTodo(todoID, token);
+			const response = await deleteTodo(todoID);
 
 			if (!response.ok) {
 				throw new Error('There was an error!');
 			}
+
+			const updatedUser = await response.json();
+			setUserData(updatedUser);
 		} catch (err) {
 			console.error(err);
 		}
@@ -96,7 +98,7 @@ const TodoList = () => {
 										</Link>
 
 										<Button
-											onClick={handleDelete}
+											onClick={() => handleDelete(todoItem._id)}
 											margin={3}
 											colorScheme={'red'}
 											size='md'

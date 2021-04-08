@@ -32,7 +32,6 @@ module.exports = {
 	// POST - create a ToDo
 	createTodo({ body, token }, res) {
 		Todo.create(body)
-			// TODO - add in User functionality
 			.then(({ _id }) => {
 				return User.findOneAndUpdate({ _id: body.userId }, { $push: { todos: _id } }, { new: true });
 			})
@@ -53,10 +52,19 @@ module.exports = {
 			runValidators: true,
 		}).select('-__v');
 		if (!updatedTodo) {
-			return res.status(404).json({ message: "Couldn't find that to-do item." });
+			return res.status(404).json({ message: "Couldn't find that todo item." });
 		}
 		res.json({ message: 'The to-do item was updated.', updatedTodo });
 	},
 
 	// DELETE - delete a todo
+	async deleteTodo({ params }, res) {
+		console.log(params);
+		const deletedTodo = await Todo.findOneAndDelete({ _id: params.id }).select('__v');
+
+		if (!deletedTodo) {
+			return res.status(404).json({ message: 'Could not find that todo item.' });
+		}
+		return res.json(deletedTodo);
+	},
 };
