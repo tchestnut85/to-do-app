@@ -13,7 +13,7 @@ import Signup from './pages/Signup';
 import TodoList from './pages/TodoList';
 
 function App() {
-	const [currentPage, setCurrentPage] = useState(null);
+	const [currentPage, setCurrentPage] = useState('/todos');
 
 	return (
 		<Router>
