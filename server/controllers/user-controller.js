@@ -87,7 +87,10 @@ module.exports = {
 			return res.status(404).json({ message: "Couldn't find user with that ID." });
 		}
 
-		const deletedTodos = await Todo.deleteMany({ username: deletedUser.name }, { new: true, runValidators: true });
+		const deletedTodos = await Todo.deleteMany(
+			{ username: deletedUser.name },
+			{ new: true, runValidators: true }
+		);
 
 		res.json({ message: `${deletedUser.name} was deleted.`, deletedUser, deletedTodos });
 	},

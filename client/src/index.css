@@ -25,6 +25,30 @@ h2 {
 	padding: 35px 15px;
 }
 
+.nav {
+	background-color: rgb(241, 239, 239);
+	padding: 0 10px 10px 10px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	justify-content: space-around;
+}
+
+.navbar-brand {
+	padding-left: 20px;
+}
+
+.nav-title,
+.nav-title:active {
+	text-decoration: none;
+	color: black;
+}
+
+.navbar-items {
+	display: flex;
+	list-style-type: none;
+}
+
 .nav-item {
 	margin: 5px 10px;
 	color: white;
@@ -32,6 +56,10 @@ h2 {
 
 .nav-item button a:hover {
 	color: white;
+}
+
+.active {
+	opacity: 1.5;
 }
 
 .btn {
@@ -56,4 +84,12 @@ h2 {
 
 .item-level {
 	padding: 10px 0;
+}
+
+@media screen and (max-width: 991px) {
+	.navbar-items {
+		margin-top: 10px;
+		flex-direction: row;
+		justify-content: center;
+	}
 }
