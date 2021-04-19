@@ -1,4 +1,12 @@
-import { Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input } from '@chakra-ui/react';
+import {
+	Button,
+	FormControl,
+	FormErrorMessage,
+	FormHelperText,
+	FormLabel,
+	Heading,
+	Input,
+} from '@chakra-ui/react';
 import React, { useState } from 'react';
 
 import Auth from '../../utils/auth';
@@ -9,24 +17,28 @@ import { loginUser } from '../../utils/API';
 
 const Login = () => {
 	const [formState, setFormState] = useState({ name: '', password: '' });
+	const [errorMsg, setErrorMsg] = useState(null);
+	console.log('errorMsg:', errorMsg);
 
 	const handleSubmit = async event => {
 		event.preventDefault();
 
 		try {
 			const response = await loginUser(formState);
-
+			console.log('response:', response);
 			if (!response.ok) {
+				setErrorMsg('Incorrect Name or Password.');
 				throw new Error('Incorrect Name or Password.');
 			}
-			const { user, token } = await response.json();
 
+			const { token } = await response.json();
 			Auth.login(token);
+
+			location.replace('/todos');
 		} catch (err) {
 			console.error(err);
 		}
 
-		location.replace('/todos');
 		setFormState({ name: '', password: '' });
 	};
 
@@ -73,10 +85,13 @@ const Login = () => {
 								value={formState.password}
 								onChange={handleChange}
 							/>
-							<FormErrorMessage></FormErrorMessage>
-							<Button marginTop={5} type='submit' colorScheme='teal' size='lg'>
-								Login
-							</Button>
+
+							<div className='error-wrap'>
+								<Button marginTop={5} type='submit' colorScheme='teal' size='lg'>
+									Login
+								</Button>
+								{errorMsg && <span className='error-msg'>{errorMsg}</span>}
+							</div>
 						</FormControl>
 					</form>
 
