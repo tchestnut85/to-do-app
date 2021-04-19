@@ -18,14 +18,13 @@ import { loginUser } from '../../utils/API';
 const Login = () => {
 	const [formState, setFormState] = useState({ name: '', password: '' });
 	const [errorMsg, setErrorMsg] = useState(null);
-	console.log('errorMsg:', errorMsg);
 
 	const handleSubmit = async event => {
 		event.preventDefault();
 
 		try {
 			const response = await loginUser(formState);
-			console.log('response:', response);
+
 			if (!response.ok) {
 				setErrorMsg('Incorrect Name or Password.');
 				throw new Error('Incorrect Name or Password.');
@@ -33,13 +32,12 @@ const Login = () => {
 
 			const { token } = await response.json();
 			Auth.login(token);
-
 			location.replace('/todos');
 		} catch (err) {
 			console.error(err);
 		}
 
-		setFormState({ name: '', password: '' });
+		// setFormState({ name: '', password: '' });
 	};
 
 	// Update the form's input state
