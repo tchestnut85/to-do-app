@@ -16,25 +16,29 @@ import { createUser } from '../utils/API';
 
 const Signup = () => {
 	const [formState, setFormState] = useState({ name: '', password: '' });
+	const [errorMsg, setErrorMsg] = useState(null);
+	console.log('errorMsg:', errorMsg);
 
 	const handleSubmit = async event => {
 		event.preventDefault();
 
 		try {
 			const response = await createUser(formState);
+			console.log('response:', response);
 
 			if (!response.ok) {
+				setErrorMsg('There was an error when trying to sign up.');
 				throw new Error('There was an error when trying to sign up.');
 			}
 
-			const { user, token } = await response.json();
+			const { token } = await response.json();
 			Auth.login(token);
+			// location.replace('/todos');
 		} catch (err) {
 			console.error(err);
 		}
 
-		setFormState({ name: '', password: '' });
-		location.replace('/todos');
+		// setFormState({ name: '', password: '' });
 	};
 
 	// Update the form's input state
@@ -78,9 +82,12 @@ const Signup = () => {
 					/>
 					<FormErrorMessage></FormErrorMessage>
 
-					<Button marginTop={5} type='submit' colorScheme='teal' size='lg'>
-						Join
-					</Button>
+					<div className='error-wrap'>
+						<Button marginTop={5} type='submit' colorScheme='teal' size='lg'>
+							Join
+						</Button>
+						{errorMsg && <span className='error-msg'>{errorMsg}</span>}
+					</div>
 
 					<DividerLine />
 					<p>Have an account already?</p>

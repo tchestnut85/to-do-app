@@ -66,6 +66,17 @@ h2 {
 	margin: 0 10px;
 }
 
+.error-wrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.error-msg {
+	color: red;
+	font-weight: bold;
+}
+
 .card {
 	margin-bottom: 15px;
 }
