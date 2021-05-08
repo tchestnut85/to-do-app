@@ -16,7 +16,6 @@ export const reducer = (state, action) => {
 			};
 		case GET_ALL_TODOS:
 			return action.payload;
-
 		case GET_ONE_TODO:
 			return {
 				...state,
@@ -24,10 +23,11 @@ export const reducer = (state, action) => {
 			};
 
 		case DELETE_TODO:
-			// filter out the todo-item to be removed
+			const updatedTodos = state.todos.filter(todo => todo._id !== action.payload);
 			return {
 				...state,
-				// add the updated todo items without the deleted one
+				todoCount: updatedTodos.length,
+				todos: [...updatedTodos],
 			};
 	}
 };
