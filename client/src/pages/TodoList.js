@@ -4,35 +4,37 @@ import { deleteTodo, getCurrentUser } from '../utils/API';
 import Auth from '../utils/auth';
 import { Button } from '@chakra-ui/react';
 import DividerLine from '../components/DividerLine';
+import { GET_ALL_TODOS } from '../utils/actions';
 import { Link } from 'react-router-dom';
 import Login from '../components/Login';
 import Signup from './Signup';
 import { capitalizeStr } from '../utils/helpers';
+import { useTodoContext } from '../utils/TodoState';
 
 const TodoList = () => {
-	const [userData, setUserData] = useState({});
-	const todos = userData?.todos || {};
+	const [state, dispatch] = useTodoContext();
+	const todos = state?.todos || {};
 
 	// Function to delete a todo item
-	const handleDelete = async todoID => {
-		const token = Auth.loggedIn() ? Auth.getToken() : null;
-		if (!token) {
-			return false;
-		}
+	// const handleDelete = async todoID => {
+	// 	const token = Auth.loggedIn() ? Auth.getToken() : null;
+	// 	if (!token) {
+	// 		return false;
+	// 	}
 
-		try {
-			const response = await deleteTodo(todoID);
+	// 	try {
+	// 		const response = await deleteTodo(todoID);
 
-			if (!response.ok) {
-				throw new Error('There was an error!');
-			}
+	// 		if (!response.ok) {
+	// 			throw new Error('There was an error!');
+	// 		}
 
-			const updatedUser = await response.json();
-			setUserData(updatedUser);
-		} catch (err) {
-			console.error(err);
-		}
-	};
+	// 		const updatedUser = await response.json();
+	// 		setUserData(updatedUser);
+	// 	} catch (err) {
+	// 		console.error(err);
+	// 	}
+	// };
 
 	// Fetch the loggedin user's data by decoding the JWT from Auth
 	useEffect(() => {
@@ -51,7 +53,11 @@ const TodoList = () => {
 				}
 
 				const user = await response.json();
-				setUserData(user);
+
+				dispatch({
+					type: GET_ALL_TODOS,
+					payload: user,
+				});
 			} catch (err) {
 				console.error(err);
 			}
@@ -59,10 +65,10 @@ const TodoList = () => {
 		getUserData();
 	}, [todos.length]);
 
-	if (userData.todoCount === 0) {
+	if (state.todoCount === 0) {
 		return (
 			<>
-				<h2>Hi {capitalizeStr(userData.name)}!</h2>
+				<h2>Hi {capitalizeStr(state.name)}!</h2>
 				<p>You don't have any To-Do items yet... get on it!</p>
 			</>
 		);
@@ -76,7 +82,7 @@ const TodoList = () => {
 		<main>
 			{Auth.loggedIn() ? (
 				<>
-					<h2>{capitalizeStr(userData.name)}'s Current To-Do List</h2>
+					<h2>{capitalizeStr(state.name)}'s Current To-Do List</h2>
 					<section>
 						{todos.map(todoItem => (
 							<div
