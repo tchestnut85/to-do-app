@@ -1,25 +1,35 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Input, Radio, RadioGroup, Switch } from '@chakra-ui/react';
+import {
+	Button,
+	FormControl,
+	FormErrorMessage,
+	FormLabel,
+	Input,
+	Radio,
+	RadioGroup,
+	Switch,
+} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { editTodo, getTodoItem } from '../utils/API';
 
 import Auth from '../utils/auth';
 import DividerLine from '../components/DividerLine';
+import { GET_ONE_TODO } from '../utils/actions';
 import { useParams } from 'react-router-dom';
+import { useTodoContext } from '../utils/TodoState';
 
 const EditTodo = () => {
 	// Get the Todo ID from the parameters
 	const { id: todoID } = useParams();
 
-	// Keep track on the priorityLevel so ChakraUI's FormState works with to todoState below
-	const [priorityLevel, setPriorityLevel] = useState('');
-
-	const [todoState, setTodoState] = useState({
+	const [todoForm, setTodoForm] = useState({
 		title: '',
 		description: '',
-		// priority: priorityLevel,
+		priority: '',
 		completed: false,
 		userId: '',
 	});
+
+	const [state, dispatch] = useTodoContext();
 
 	const handleSubmit = async event => {
 		event.preventDefault();
@@ -30,7 +40,7 @@ const EditTodo = () => {
 		}
 
 		try {
-			const response = await editTodo(todoState, todoID, token);
+			const response = await editTodo(todoForm, todoID, token);
 			if (!response) {
 				throw new Error('There was an error.');
 			}
@@ -42,8 +52,8 @@ const EditTodo = () => {
 
 	const handleChange = event => {
 		const { name, value } = event.target;
-		setTodoState({
-			...todoState,
+		setTodoForm({
+			...todoForm,
 			[name]: value,
 		});
 	};
@@ -58,11 +68,17 @@ const EditTodo = () => {
 				const response = await getTodoItem(todoID);
 				const todoData = await response.json();
 
-				setTodoState({
-					completed: todoData.completed,
-					priority: todoData.priority,
-					description: todoData.description,
+				dispatch({
+					type: GET_ONE_TODO,
+					payload: todoData,
+				});
+
+				setTodoForm({
 					title: todoData.title,
+					description: todoData.description,
+					priority: todoData.priority,
+					completed: todoData.completed,
+					userId: todoData.userId,
 				});
 			} catch (err) {
 				console.error(err);
@@ -83,7 +99,7 @@ const EditTodo = () => {
 							className='form-control'
 							id='title'
 							name='title'
-							value={todoState.title}
+							value={todoForm.title}
 							onChange={handleChange}
 						/>
 						<DividerLine />
@@ -93,7 +109,7 @@ const EditTodo = () => {
 							className='form-control'
 							id='description'
 							name='description'
-							value={todoState.description}
+							value={todoForm.description}
 							onChange={handleChange}
 						/>
 						<DividerLine />
@@ -102,8 +118,8 @@ const EditTodo = () => {
 						<RadioGroup
 							id='priority'
 							name='priority'
-							onChange={value => setTodoState({ ...todoState, priority: value })}
-							value={todoState.priority}
+							onChange={value => setTodoForm({ ...todoForm, priority: value })}
+							value={todoForm.priority}
 							direction='row'
 						>
 							<Radio name='priority' padding={4} value='low' colorScheme='cyan'>
@@ -124,8 +140,10 @@ const EditTodo = () => {
 								name='completed'
 								colorScheme='purple'
 								size='lg'
-								isChecked={todoState.completed}
-								onChange={() => setTodoState({ ...todoState, completed: !todoState.completed })}
+								isChecked={todoForm.completed}
+								onChange={() =>
+									setTodoForm({ ...todoForm, completed: !todoForm.completed })
+								}
 							/>
 						</div>
 						<DividerLine />

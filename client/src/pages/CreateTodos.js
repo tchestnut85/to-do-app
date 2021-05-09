@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Redirect, Route } from 'react-router-dom';
 
 import Auth from '../utils/auth';
-import TodoList from './TodoList';
 import { saveTodo } from '../utils/API';
 
 const CreateTodo = () => {
@@ -17,7 +15,7 @@ const CreateTodo = () => {
 	// Grab the current user's ID by decoding the JWT with the getProfile function from Auth
 	const userId = Auth.getProfile().data._id;
 
-	// Function to update the todo state from the form input
+	// Function to update the current todo state from the form input
 	const handleChange = event => {
 		const { name, value } = event.target;
 		setTodoState({
@@ -96,7 +94,6 @@ const CreateTodo = () => {
 								id='priority-low'
 								name='priority'
 								value='low'
-								// checked={setTodoState.priority === 'low'}
 								onChange={handleChange}
 							/>
 							<label className='form-check-label' htmlFor='priority-low'>
@@ -110,7 +107,6 @@ const CreateTodo = () => {
 								id='priority-medium'
 								name='priority'
 								value='medium'
-								// checked={setTodoState.priority === 'medium'}
 								onChange={handleChange}
 							/>
 							<label className='form-check-label' htmlFor='priority-medium'>
@@ -124,7 +120,6 @@ const CreateTodo = () => {
 								id='priority-high'
 								name='priority'
 								value='high'
-								// checked={setTodoState.priority === 'high'}
 								onChange={handleChange}
 							/>
 							<label className='form-check-label' htmlFor='priority-high'>
