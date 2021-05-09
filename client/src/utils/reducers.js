@@ -1,25 +1,22 @@
-import { CREATE_TODO, DELETE_TODO, EDIT_TODO, GET_ALL_TODOS, GET_ONE_TODO } from './actions';
+import { DELETE_TODO, GET_ALL_TODOS, GET_ONE_TODO } from './actions';
 
 import { useReducer } from 'react';
 
 export const reducer = (state, action) => {
 	switch (action.type) {
-		case CREATE_TODO:
-			return {
-				...state,
-				// add the new todo item
-			};
-		case EDIT_TODO:
-			return {
-				...state,
-				// add the updated todo item
-			};
 		case GET_ALL_TODOS:
-			return action.payload;
+			return {
+				...state,
+				todos: action.payload.todos,
+				_id: action.payload._id,
+				name: action.payload.name,
+				todoCount: action.payload.todoCount,
+				createdAt: action.payload.createdAt,
+			};
 		case GET_ONE_TODO:
 			return {
 				...state,
-				// add the single todo item
+				currentTodo: action.payload,
 			};
 
 		case DELETE_TODO:
