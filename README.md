@@ -8,6 +8,7 @@ This is a To-Do list app to help users stay organized with tasks they need to ge
 
 This is a Full-Stack MERN app using a RESTful API for interaction with the MongoDB database. React was used on the front-end along with the Chakra UI React library.
 MongoDB is used for the database along with Mongoose, Express and Node.js on the back-end to create a RESTful API that the front-end interacts with.
+React Context API is used for state management of the app including the current user's info, their to-do items and the current to-do item when selecting a single item to edit.
 
 ## Table of Contents
 
