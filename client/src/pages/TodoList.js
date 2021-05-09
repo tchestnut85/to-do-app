@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { DELETE_TODO, GET_ALL_TODOS } from '../utils/actions';
+import React, { useEffect } from 'react';
 import { deleteTodo, getCurrentUser } from '../utils/API';
 
 import Auth from '../utils/auth';
@@ -8,10 +9,11 @@ import { Link } from 'react-router-dom';
 import Login from '../components/Login';
 import Signup from './Signup';
 import { capitalizeStr } from '../utils/helpers';
+import { useTodoContext } from '../utils/TodoState';
 
 const TodoList = () => {
-	const [userData, setUserData] = useState({});
-	const todos = userData?.todos || {};
+	const [state, dispatch] = useTodoContext();
+	const { todos, todoCount, name } = state;
 
 	// Function to delete a todo item
 	const handleDelete = async todoID => {
@@ -28,7 +30,11 @@ const TodoList = () => {
 			}
 
 			const updatedUser = await response.json();
-			setUserData(updatedUser);
+
+			dispatch({
+				type: DELETE_TODO,
+				payload: updatedUser._id,
+			});
 		} catch (err) {
 			console.error(err);
 		}
@@ -51,7 +57,11 @@ const TodoList = () => {
 				}
 
 				const user = await response.json();
-				setUserData(user);
+
+				dispatch({
+					type: GET_ALL_TODOS,
+					payload: user,
+				});
 			} catch (err) {
 				console.error(err);
 			}
@@ -59,10 +69,10 @@ const TodoList = () => {
 		getUserData();
 	}, [todos.length]);
 
-	if (userData.todoCount === 0) {
+	if (todoCount === 0) {
 		return (
 			<>
-				<h2>Hi {capitalizeStr(userData.name)}!</h2>
+				<h2>Hi {capitalizeStr(name)}!</h2>
 				<p>You don't have any To-Do items yet... get on it!</p>
 			</>
 		);
@@ -76,7 +86,7 @@ const TodoList = () => {
 		<main>
 			{Auth.loggedIn() ? (
 				<>
-					<h2>{capitalizeStr(userData.name)}'s Current To-Do List</h2>
+					<h2>{capitalizeStr(name)}'s Current To-Do List</h2>
 					<section>
 						{todos.map(todoItem => (
 							<div
