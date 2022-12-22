@@ -83,7 +83,7 @@ module.exports = {
 	async deleteUser({ params }, res) {
 		const deletedUser = await User.findOneAndDelete({ _id: params._id });
 
-		if (!deleteduser) {
+		if (!deletedUser) {
 			return res.status(404).json({ message: "Couldn't find user with that ID." });
 		}
 
