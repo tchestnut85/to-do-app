@@ -1,6 +1,6 @@
 # React To-Do App
 
-<a href="https://todoapp-tc.herokuapp.com/">![Deployed App](https://img.shields.io/badge/Deployed%20App-blue.svg)</a> <a href=./LICENSE>![License](https://img.shields.io/badge/License%3A-MIT-green.svg)</a>
+<a href="https://todoapp-tc.onrender.com">![Deployed App](https://img.shields.io/badge/Deployed%20App-blue.svg)</a> <a href=./LICENSE>![License](https://img.shields.io/badge/License%3A-MIT-green.svg)</a>
 
 ## Description
 
@@ -51,7 +51,7 @@ Contact me at **thomaschestnut00@gmail.com** with any questions or if you'd like
 
 ## Links
 
--   **[Deployed App](https://todoapp-tc.herokuapp.com/)**
+-   **[Deployed App](https://todoapp-tc.onrender.com)**
 -   **[GitHub Repo](https://github.com/tchestnut85/to-do-app)**
 -   **[My Portfolio](https://tomchestnut.dev)**
 -   **[Connect on LinkedIn](https://www.linkedin.com/in/thomas-chestnut)**
